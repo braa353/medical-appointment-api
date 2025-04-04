@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     protected $primaryKey = 'AppointmentID';
-    protected $fillable = ['PatientID', 'DoctorID', 'ScheduleID', 'AppointmentDate', 'AppointmentTime', 'Status', 'CreatedAt', 'UpdatedAt'];
+    protected $fillable = ['PatientID', 'DoctorID', 'ScheduleID', 'AppointmentDate', 'AppointmentTime', 'Status'];
 
     public function patient()
     {

@@ -18,8 +18,7 @@ return new class extends Migration {
             $table->date('AppointmentDate');
             $table->time('AppointmentTime');
             $table->enum('Status', ['Pending', 'Accepted', 'Rejected', 'Completed']);
-            $table->timestamp('CreatedAt');
-            $table->timestamp('UpdatedAt')->nullable();
+            $table->timestamps();
         });
     }
 
