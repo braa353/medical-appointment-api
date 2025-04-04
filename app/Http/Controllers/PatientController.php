@@ -32,4 +32,28 @@ class PatientController extends Controller
         $patient->update($request->all());
         return response()->json($patient);
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'PatientID' => 'required',
+            'UserID' => 'required|exists:users,UserID',
+            'Name' => 'required|string',
+            'Phone' => 'required|string',
+        ]);
+
+        $patient = Patient::create($validated);
+        return response()->json($patient, 201);
+    }
+
+    public function destroy($id)
+    {
+        $patient = Patient::find($id);
+        if (!$patient) {
+            return response()->json(['error' => 'Patient not found'], 404);
+        }
+
+        $patient->delete();
+        return response()->json(['message' => 'Patient deleted successfully']);
+    }
 }

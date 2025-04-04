@@ -23,4 +23,17 @@ class NotificationController extends Controller
         $notification->update(['IsRead' => true]);
         return response()->json($notification);
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'UserID' => 'required|exists:users,UserID',
+            'Message' => 'required|string',
+            'NotificationType' => 'required|string',
+            'IsRead' => 'boolean',
+        ]);
+
+        $notification = Notification::create($validated);
+        return response()->json($notification, 201);
+    }
 }

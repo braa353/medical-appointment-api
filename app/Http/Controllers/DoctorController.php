@@ -32,4 +32,29 @@ class DoctorController extends Controller
         $doctor->update($request->all());
         return response()->json($doctor);
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'DoctorID' => 'required',
+            'UserID' => 'required|exists:users,UserID',
+            'Specialization' => 'required|string',
+            'Bio' => 'nullable|string',
+            'Rating' => 'nullable|decimal',
+        ]);
+
+        $doctor = Doctor::create($validated);
+        return response()->json($doctor, 201);
+    }
+
+    public function destroy($id)
+    {
+        $doctor = Doctor::find($id);
+        if (!$doctor) {
+            return response()->json(['error' => 'Doctor not found'], 404);
+        }
+
+        $doctor->delete();
+        return response()->json(['message' => 'Doctor deleted successfully']);
+    }
 }

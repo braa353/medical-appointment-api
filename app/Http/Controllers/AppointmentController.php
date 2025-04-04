@@ -7,21 +7,6 @@ use App\Models\Appointment;
 
 class AppointmentController extends Controller
 {
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'PatientID' => 'required|exists:patients,PatientID',
-            'DoctorID' => 'required|exists:doctors,DoctorID',
-            'ScheduleID' => 'required|exists:schedules,ScheduleID',
-            'AppointmentDate' => 'required|date',
-            'AppointmentTime' => 'required|date_format:H:i:s',
-            'Status' => 'required|in:Pending,Accepted,Rejected,Completed',
-        ]);
-
-        $appointment = Appointment::create($validated);
-        return response()->json($appointment, 201);
-    }
-
     public function index()
     {
         $appointments = Appointment::with('patient', 'doctor', 'schedule')->get();
@@ -48,6 +33,21 @@ class AppointmentController extends Controller
         return response()->json($appointment);
     }
 
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'PatientID' => 'required|exists:patients,PatientID',
+            'DoctorID' => 'required|exists:doctors,DoctorID',
+            'ScheduleID' => 'required|exists:schedules,ScheduleID',
+            'AppointmentDate' => 'required|date',
+            'AppointmentTime' => 'required|time',
+            'Status' => 'required|in:Pending,Accepted,Rejected,Completed',
+        ]);
+
+        $appointment = Appointment::create($validated);
+        return response()->json($appointment, 201);
+    }
+
     public function destroy($id)
     {
         $appointment = Appointment::find($id);
@@ -56,6 +56,6 @@ class AppointmentController extends Controller
         }
 
         $appointment->delete();
-        return response()->json(['message' => 'Appointment deleted successfully']);
+        return response()->json(['message' => 'Appointment cancelled successfully']);
     }
 }
