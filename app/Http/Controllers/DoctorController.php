@@ -40,7 +40,7 @@ class DoctorController extends Controller
             'UserID' => 'required|exists:users,UserID',
             'Specialization' => 'required|string',
             'Bio' => 'nullable|string',
-            'Rating' => 'nullable|decimal',
+            'Rating' => 'nullable|decimal:1,2',
         ]);
 
         $doctor = Doctor::create($validated);

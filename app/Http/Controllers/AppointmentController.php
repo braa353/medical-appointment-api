@@ -40,7 +40,7 @@ class AppointmentController extends Controller
             'DoctorID' => 'required|exists:doctors,DoctorID',
             'ScheduleID' => 'required|exists:schedules,ScheduleID',
             'AppointmentDate' => 'required|date',
-            'AppointmentTime' => 'required|time',
+            'AppointmentTime' => 'required|date_format:H:i:s',
             'Status' => 'required|in:Pending,Accepted,Rejected,Completed',
         ]);
 

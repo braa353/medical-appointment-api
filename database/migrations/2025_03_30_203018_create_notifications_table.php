@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->text('Message');
             $table->enum('NotificationType', ['NewAppointment', 'Cancellation', 'Rating', 'Reminder']);
             $table->boolean('IsRead')->default(false);
-            $table->timestamp('CreatedAt');
+            $table->timestamps();
         });
     }
 
